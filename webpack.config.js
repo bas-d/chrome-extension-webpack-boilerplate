@@ -61,10 +61,14 @@ var options = {
       from: "src/manifest.json",
       transform: function (content, path) {
         // generates the manifest file using the package.json informations
+        var manifest = JSON.parse(content.toString())
+        if (env.NODE_ENV === "development") {
+          manifest.content_security_policy = "script-src 'self' 'unsafe-eval'; object-src 'self'"
+        }
         return Buffer.from(JSON.stringify({
           description: process.env.npm_package_description,
           version: process.env.npm_package_version,
-          ...JSON.parse(content.toString())
+          ...manifest
         }))
       }
     }]),
