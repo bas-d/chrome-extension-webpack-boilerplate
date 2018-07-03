@@ -30,6 +30,12 @@ var options = {
   module: {
     rules: [
       {
+        test: /\.jsx?$/,
+        enforce: "pre",
+        use: ["remove-flow-types-loader"],
+        include: path.join(__dirname, "src")
+      },
+      {
         test: /\.css$/,
         loader: "style-loader!css-loader",
         exclude: /node_modules/
